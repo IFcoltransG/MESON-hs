@@ -1,1 +1,1 @@
-main = putstrln "Not implemented"
+main = putStrLn "Not implemented"
