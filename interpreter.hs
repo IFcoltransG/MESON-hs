@@ -2,7 +2,9 @@ import qualified Data.Set as Set
 import qualified Data.Text as T
 
 digits = "0123456789_"
+-- ^ characters allowed in a number
 
+-- | A MESON expression
 data MESON
   = MESONInteger Integer
   | MESONList [MESON]
@@ -19,6 +21,7 @@ unescapeMap =
     ("%25", "%") --note: this percent sign transformation must go last so it doesn't replace percents in other unescapes
   ]
 
+-- | Turn escape sequences into their corresponding strings
 unescape :: String -> String
 unescape = T.unpack . (\xs -> foldl (flip (onText T.replace)) xs unescapeMap) . T.pack
   where
@@ -40,4 +43,5 @@ parseMESONToken ((MESONInteger num) : state) "{}" = (MESONSet . Set.fromList $ t
   where
     numInt = fromIntegral num
 
+-- Read from STDIN, parse each line as MESON, then show the result
 main = interact $ unlines . map (show . parseMESONCode) . lines
