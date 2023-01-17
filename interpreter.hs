@@ -30,7 +30,7 @@ parseMESONCode f = head $ foldl parseMESONToken (error "Bottom of stack!") (word
 parseMESONToken :: [MESON] -> String -> [MESON]
 parseMESONToken state str | all (`elem` digits) str = (MESONInteger . read $ filter (/= '_') str) : state
 parseMESONToken state ('"' : str) = MESONString (unescape str) : state
-parseMESONToken state ('(' : xs) | dropWhile (== ',') xs == ")" = MESONTuple (take num state) : (drop num state)
+parseMESONToken state ('(' : xs) | dropWhile (== ',') xs == ")" = MESONTuple (take num state) : drop num state
   where
     num = succ . length $ takeWhile (== ',') xs
 parseMESONToken ((MESONInteger num) : state) "[]" = MESONList (take numInt state) : drop numInt state
