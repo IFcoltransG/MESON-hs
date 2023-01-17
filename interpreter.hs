@@ -16,7 +16,7 @@ unescapeMap =
     ("%0A", "\n"),
     ("%09", "\t"),
     ("%0B", "\v"), --vertical tab
-    ("%25", "%") --note: this percent sign transformation must go last for obvious reasons
+    ("%25", "%") --note: this percent sign transformation must go last so it doesn't replace percents in other unescapes
   ]
 
 unescape :: String -> String
